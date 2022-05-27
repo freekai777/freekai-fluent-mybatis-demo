@@ -11,4 +11,5 @@ server:
   port: 8001
 mybatis:
   configuration:
+    # 配置打印sql语句到控制台
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

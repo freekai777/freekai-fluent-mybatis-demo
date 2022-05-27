@@ -1,5 +1,6 @@
 package com.freekai.global;
 
+import com.freekai.annotation.FreekaiAnnotation;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -15,6 +16,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
+        if(methodParameter.hasMethodAnnotation(FreekaiAnnotation.class)){
+            // 有此注解的方法不拦截
+            return false;
+        }
         return true;
     }
 
@@ -23,4 +28,6 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         // 直接包裹一层
         return FreekaiResponse.ok(o);
     }
+
+
 }
